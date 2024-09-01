@@ -68,11 +68,11 @@ float PID::update(float err, float h) {
     float d;
     m_h = h;
 
-    // 積分
+    // 積分 // integral
     m_integral = m_integral + m_h * (err + m_err) / 2 / m_ti;
     if (m_integral > 30000.0f) m_integral = 30000.0f;
     if (m_integral < -30000.0f) m_integral = -30000.0f;
-    // 不完全微分
+    // 不完全微分 || Incomplete
     m_differential = (2 * m_eta * m_td - m_h) * m_differential / (2 * m_eta * m_td + m_h) +
                      2 * m_td * (err - m_err) / (2 * m_eta * m_td + m_h);
     m_err = err;

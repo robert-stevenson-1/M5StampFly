@@ -206,6 +206,16 @@ float sensor_read(void) {
     // Y軸：前後（前が正）左肩上がりが回転の正
     // Z軸：上下（上が正）左回りが回転の正
 
+    // In the following, according to how to take the coordinate axis of aircraft engineering
+    // X -axis: Balcation (front is positive) Positive of rotation on the left shoulder
+    // Y -axis: Right and left (right on the right) Head raises positive rotation
+    // Z axis: Lower (lower down is positive) right -handed right -handed rotation
+    // The axis is converted so that it becomes
+    // How to shoot the coordinate axis of BMI270
+    // X axis: Right and left (right on the right) Head -raising is positive
+    // Y -axis: Front and rear (front is positive) Positive of rotation on the left shoulder
+    // Z axis: Up and lower (upper and lower are positive) Simillation is positive of rotation    
+    
     // Get IMU raw data
     imu_update();  // IMUの値を読む前に必ず実行
     acc_x  = imu_get_acc_x();
@@ -225,7 +235,7 @@ float sensor_read(void) {
     Pitch_rate_raw = gyro_x;
     Yaw_rate_raw   = -gyro_z;
 
-    if ((Mode == PARKING_MODE) && (Mode != preMode))  // モードが遷移した時Static変数を初期化する。外れ値除去のバグ対策
+    if ((Mode == PARKING_MODE) && (Mode != preMode))  // モードが遷移した時Static変数を初期化する。外れ値除去のバグ対策  //Initialize Static variables when the mode transitions. Bug countermeasures for removing outdated values
     {
         first_flag   = 0;
         old_range[0] = 0;
@@ -280,6 +290,7 @@ float sensor_read(void) {
                 ToF_bottom_data_ready_flag = 0;
 
                 // 距離の値の更新
+                // Update distance value
                 // old_range[0] = dist;
                 RawRange = tof_bottom_get_range();
                 if (Mode == PARKING_MODE) RawRangeFront = tof_front_get_range();
@@ -292,6 +303,7 @@ float sensor_read(void) {
                 }
 
                 // 外れ値処理
+                // Missing value processing
                 deff = Range - old_range[1];
                 if (deff > 500 && outlier_counter < 2) {
                     Range = old_range[1] + (old_range[1] - old_range[3]) / 2;
@@ -323,6 +335,7 @@ float sensor_read(void) {
             first_flag = 1;
         Altitude2 = EstimatedAltitude.Altitude;
         // MAX_ALTを超えたら高度下げる（自動着陸）
+        // If you exceed max_alt, lower the altitude (automatic landing)
         if ((Altitude2 > ALT_LIMIT && Alt_flag >= 1 && Flip_flag == 0) || RawRange == 0)
             Range0flag++;
         else
@@ -354,7 +367,7 @@ float sensor_read(void) {
         if (Under_voltage_flag > UNDER_VOLTAGE_COUNT) Under_voltage_flag = UNDER_VOLTAGE_COUNT;
     }
 
-    preMode = Mode;  // 今のモードを記憶
+    preMode = Mode;  // 今のモードを記憶 // Remember the current mode
 
     uint32_t et = micros();
     // USBSerial.printf("Sensor read %f %f %f\n\r", (mt-st)*1.0e-6, (et-mt)*1e-6, (et-st)*1.0e-6);

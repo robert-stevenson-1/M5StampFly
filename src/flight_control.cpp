@@ -266,11 +266,11 @@ void init_copter(void) {
     // PID GAIN and etc. Init
     control_init();
 
-    // Initilize Radio control
+    // Initialize Radio control
     rc_init();
 
     // 割り込み設定
-    // Initialize intrupt
+    // Initialize interrupt settings
     timer = timerBegin(0, 80, true);
     timerAttachInterrupt(timer, &onTimer, true);
     timerAlarmWrite(timer, 2500, true);
@@ -291,6 +291,7 @@ void loop_400Hz(void) {
     static uint8_t led = 1;
     float sense_time;
     // 割り込みにより400Hzで以降のコードが実行
+    // The subsequent code is executed at 400Hz by interrupt
     while (Loop_flag == 0);
     Loop_flag = 0;
 
@@ -433,7 +434,7 @@ void flip(void) {
     T_flip               = get_trim_duty(Voltage) * BATTERY_VOLTAGE;
 
     // Flip Sequence
-    if (Flip_counter < flip_delay)  // 一時的な上昇
+    if (Flip_counter < flip_delay) // 一時的な上昇 // Temporary rise
     {
         Flip_flag = 1;
         // Roll_rate_reference = 0.0f;
@@ -449,7 +450,7 @@ void flip(void) {
         Yaw_rate_command = 0.0;
         rate_control();
         Flip_counter++;
-    } else if (Flip_counter < (flip_step / 4 + flip_delay))  // 宙返り開始(0deg-90deg)
+    } else if (Flip_counter < (flip_step / 4 + flip_delay))  // 宙返り開始(0deg-90deg) // Start of spaces(0deg-90deg)
     {
         Flip_flag      = 2;
         Thrust_command = T_flip * 0.3f;  // 1.05//0.4
@@ -459,7 +460,7 @@ void flip(void) {
         Yaw_rate_command    = 0.0;
         rate_control();
         Flip_counter++;
-    } else if (Flip_counter < (2 * flip_step / 4 + flip_delay))  // 宙返り(90deg-180deg)
+    } else if (Flip_counter < (2 * flip_step / 4 + flip_delay))  // 宙返り(90deg-180deg) // Return (90deg-180deg)
     {
         Flip_flag      = 3;
         Thrust_command = T_flip * 0.15f;  // 1.0//0.2
@@ -469,7 +470,7 @@ void flip(void) {
         Yaw_rate_command    = 0.0f;
         rate_control();
         Flip_counter++;
-    } else if (Flip_counter < (3 * flip_step / 4 + flip_delay))  // 宙返り(180deg-270deg)
+    } else if (Flip_counter < (3 * flip_step / 4 + flip_delay))  // 宙返り(180deg-270deg) // Return (180DEG-270DEG)
     {
         Flip_flag      = 4;
         Thrust_command = T_flip * 0.15f;  // 1.0//0.2
@@ -479,7 +480,7 @@ void flip(void) {
         Yaw_rate_command    = 0.0f;
         rate_control();
         Flip_counter++;
-    } else if (Flip_counter < (flip_step + flip_delay))  // 宙返り(270deg-360deg)
+    } else if (Flip_counter < (flip_step + flip_delay))  // 宙返り(270deg-360deg) // Return (270deg-360deg)
     {
         Flip_flag      = 5;
         Thrust_command = T_flip * 1.0f;
@@ -489,7 +490,7 @@ void flip(void) {
         Yaw_rate_command    = 0.0f;
         rate_control();
         Flip_counter++;
-    } else if (Flip_counter < (flip_step + flip_delay + 10))  // 元に戻す準備
+    } else if (Flip_counter < (flip_step + flip_delay + 10))  // 元に戻す準備  // Preparation to restore
     {
         Flip_flag = 6;
         if (Ahrs_reset_flag == 0) {
@@ -508,7 +509,7 @@ void flip(void) {
         theta_pid.reset();
 
         Flip_counter++;
-    } else if (Flip_counter < (flip_step + flip_delay + 200))  // 連続Flipの抑制
+    } else if (Flip_counter < (flip_step + flip_delay + 200))  // 連続Flipの抑制 // Continuous FLIP suppression
     {
         Flip_flag = 0;
         // Get command
@@ -529,6 +530,7 @@ void flip(void) {
 
 uint8_t judge_mode_change(void) {
     // Ariming Button が押されて離されたかを確認
+    // Confirm that ariming button was pushed and separated
     uint8_t state;
     static uint8_t chatter = 0;
     state                  = 0;
@@ -882,6 +884,7 @@ void rate_control(void) {
 
         // Motor Control
         // 正規化Duty
+        //Normalization Duty
         FrontRight_motor_duty = Duty_fr.update(
             (Thrust_command + (-Roll_rate_command + Pitch_rate_command + Yaw_rate_command) * 0.25f) / BATTERY_VOLTAGE,
             Interval_time);
@@ -973,6 +976,8 @@ void reset_angle_control(void) {
     /////////////////////////////////////
     // 以下の処理で、角度制御が有効になった時に
     // 急激な目標値が発生して機体が不安定になるのを防止する
+    // When the angle control is enabled in the following processing
+    // Prevent rapid target values ​​from becoming unstable
     Aileron_center     = Roll_angle_command;
     Elevator_center    = Pitch_angle_command;
     Roll_angle_offset  = 0;
