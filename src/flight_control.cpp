@@ -222,10 +222,10 @@ Filter Duty_rl;
 volatile float Thrust0 = 0.0;
 uint8_t Alt_flag       = 0;
 
-// 速度目標Z
+// 速度目標Z // Speed ​​target Z
 float Z_dot_ref = 0.0f;
 
-// 高度目標
+// 高度目標 // High goal
 const float Alt_ref0   = 0.5f;
 volatile float Alt_ref = Alt_ref0;
 
@@ -253,7 +253,7 @@ void flip(void);
 float get_rate_ref(float x);
 
 // 割り込み関数
-// Intrupt function
+// Interrupt function
 hw_timer_t* timer = NULL;
 void IRAM_ATTR onTimer() {
     Loop_flag = 1;
@@ -816,11 +816,11 @@ uint8_t auto_landing(void) {
         for (uint8_t i = 0; i < 10; i++) old_alt[i] = Altitude2;
         Thrust0 = get_trim_duty(Voltage);
     }
-    if (old_alt[9] >= Altitude2)  // もし降下しなかったら、スロットル更に下げる
+    if (old_alt[9] >= Altitude2)  // もし降下しなかったら、スロットル更に下げる // If it doesn't fall, lower the throttle further
     {
         Thrust0 = Thrust0 * 0.9999;
     }
-    if (Altitude2 < 0.15)  // 地面効果で降りなかった場合対策
+    if (Altitude2 < 0.15)  // 地面効果で降りなかった場合対策 // If you do not get off due to the ground effect, measures
     {
         Thrust0 = Thrust0 * 0.999;
     }

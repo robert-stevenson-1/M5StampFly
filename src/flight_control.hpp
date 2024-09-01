@@ -63,7 +63,7 @@
 #define RATE_MAX  (1600.0f)
 #define RATE_EXPO (0.5f)
 
-// グローバル関数の宣言
+// グローバル関数の宣言 // Declaration of global function
 void init_copter(void);
 void loop_400Hz(void);
 void set_duty_fr(float duty);
@@ -71,7 +71,7 @@ void set_duty_fl(float duty);
 void set_duty_rr(float duty);
 void set_duty_rl(float duty);
 
-// グローバル変数
+// グローバル変数 // Global variable
 extern volatile uint8_t Mode;
 extern volatile uint8_t Loop_flag;
 extern float Control_period;
@@ -138,6 +138,7 @@ extern volatile float Roll_rate_command, Pitch_rate_command, Yaw_rate_command;
 // Angle comannd
 extern volatile float Roll_angle_command, Pitch_angle_command, Yaw_angle_command;
 // 高度目標
+// High goal
 extern volatile float Alt_ref;
 // Motor Duty
 extern volatile float FrontRight_motor_duty;
@@ -145,6 +146,7 @@ extern volatile float FrontLeft_motor_duty;
 extern volatile float RearRight_motor_duty;
 extern volatile float RearLeft_motor_duty;
 // 速度目標Z
+// Speed ​​target Z
 extern float Z_dot_ref;
 
 extern uint8_t Control_mode;
