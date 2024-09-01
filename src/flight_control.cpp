@@ -74,31 +74,51 @@ float Control_period = 0.0025f;  // 400Hz
 
 // PID Gain
 // Rate control PID gain
-const float Roll_rate_kp  = 0.65f;
-const float Roll_rate_ti  = 0.7f;
-const float Roll_rate_td  = 0.01;
-const float Roll_rate_eta = 0.125f;
+// const float Roll_rate_kp  = 0.65f;
+const float Roll_rate_kp  = 0.3f;
+// const float Roll_rate_ti  = 0.7f;
+const float Roll_rate_ti  = 0.35f;
+// const float Roll_rate_td  = 0.01;
+const float Roll_rate_td  = 0.005f;
+// const float Roll_rate_eta = 0.125f;
+const float Roll_rate_eta = 0.0625f;
 
-const float Pitch_rate_kp  = 0.95f;
-const float Pitch_rate_ti  = 0.7f;
-const float Pitch_rate_td  = 0.025f;
-const float Pitch_rate_eta = 0.125f;
+// const float Pitch_rate_kp  = 0.95f;
+const float Pitch_rate_kp  = 0.475f;
+// const float Pitch_rate_ti  = 0.7f;
+const float Pitch_rate_ti  = 0.35f;
+// const float Pitch_rate_td  = 0.025f;
+const float Pitch_rate_td  = 0.0125f;
+// const float Pitch_rate_eta = 0.125f;
+const float Pitch_rate_eta = 0.0625f;
 
-const float Yaw_rate_kp  = 3.0f;
-const float Yaw_rate_ti  = 0.8f;
-const float Yaw_rate_td  = 0.01f;
-const float Yaw_rate_eta = 0.125f;
+// const float Yaw_rate_kp  = 3.0f;
+const float Yaw_rate_kp  = 1.5f;
+// const float Yaw_rate_ti  = 0.8f;
+const float Yaw_rate_ti  = 0.4f;
+// const float Yaw_rate_td  = 0.01f;
+const float Yaw_rate_td  = 0.005f;
+// const float Yaw_rate_eta = 0.125f;
+const float Yaw_rate_eta = 0.0625f;
 
 // Angle control PID gain
-const float Rall_angle_kp  = 5.0f;  // 8.0
-const float Rall_angle_ti  = 4.0f;
-const float Rall_angle_td  = 0.04f;
-const float Rall_angle_eta = 0.125f;
+// const float Rall_angle_kp  = 5.0f;  // 8.0
+const float Rall_angle_kp  = 2.5f;  // 8.0
+// const float Rall_angle_ti  = 4.0f;
+const float Rall_angle_ti  = 2.0f;
+// const float Rall_angle_td  = 0.04f;
+const float Rall_angle_td  = 0.02f;
+// const float Rall_angle_eta = 0.125f;
+const float Rall_angle_eta = 0.0625f;
 
-const float Pitch_angle_kp  = 5.0f;  // 8.0
-const float Pitch_angle_ti  = 4.0f;
-const float Pitch_angle_td  = 0.04f;
-const float Pitch_angle_eta = 0.125f;
+// const float Pitch_angle_kp  = 5.0f;  // 8.0
+const float Pitch_angle_kp  = 2.5f;  // 8.0
+// const float Pitch_angle_ti  = 4.0f;
+const float Pitch_angle_ti  = 2.0f;
+// const float Pitch_angle_td  = 0.04f;
+const float Pitch_angle_td  = 0.02f;
+// const float Pitch_angle_eta = 0.125f;
+const float Pitch_angle_eta = 0.0625f;
 
 // Altitude control PID gain
 const float alt_kp     = 0.38f;  // 5.0//soso 0.5
